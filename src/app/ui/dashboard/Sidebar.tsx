@@ -1,7 +1,7 @@
 'use client';
 import { useKanbanTaskManagerContext } from '@/app/lib/contexts/KanbanTaskManagerContext';
 import { auth } from '@/app/lib/firebase-auth/config';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, EyeSlashIcon, UserIcon } from '@heroicons/react/24/outline';
 import { signOut } from 'firebase/auth';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
@@ -74,18 +74,18 @@ export default function Sidebar() {
         <ThemeSwitcher />
 
         <Button
-          onClick={handleSignOut}
-          className="text-sm text-gray5 px-4 py-2 rounded-lg text-center"
-        >
-          Sign Out
-        </Button>
-
-        <Button
           onClick={handleHideSidebarClick}
-          className="flex flex-row ml-2 mt-2 p-3 items-center font-bold text-gray3 text-sm gap-2"
+          className="flex flex-row ml-2 mt-2 p-3 items-center font-bold text-gray3 text-sm gap-2 w-fit"
         >
           <EyeSlashIcon className="size-6" />
           Hide Sidebar
+        </Button>
+        <Button
+          onClick={handleSignOut}
+          className="flex flex-row ml-2 pl-3 items-center font-bold text-gray3 text-sm gap-2 w-fit "
+        >
+          <UserIcon className="size-6" />
+          Sign Out
         </Button>
       </div>
     </section>
