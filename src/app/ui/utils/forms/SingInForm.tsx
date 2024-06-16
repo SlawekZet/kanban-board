@@ -32,6 +32,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
             id="email"
             type="email"
             className="w-full px-3 py-2 text-gray-900 rounded-lg"
+            placeholder="Type your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -48,6 +49,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
             id="password"
             type="password"
             className="w-full px-3 py-2 rounded-lg"
+            placeholder="Type password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -61,7 +63,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
         <div className="flex items-center justify-center">
           <Button
             // type="submit"
-            className="font-bold bg-gray2 dark:bg-gray5 px-4 py-2 rounded-lg w-[150px] text-center"
+            className="font-bold bg-gray2 dark:bg-gray5 px-4 py-2 rounded-lg w-[150px] text-center shadow-md"
           >
             Sign In
           </Button>

@@ -1,11 +1,16 @@
 'use client';
 import { useKanbanTaskManagerContext } from '@/app/lib/contexts/KanbanTaskManagerContext';
+import { auth } from '@/app/lib/firebase-auth/config';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { signOut } from 'firebase/auth';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { BoardList } from '../boards/BoardList';
 import { Button } from '../utils/buttons/Button';
 import { ThemeSwitcher } from './ThemeSwitcher';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-import Image from 'next/image';
-import { useTheme } from 'next-themes';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Sidebar() {
   const { isSidebarHidden, setIsSidebarHidden } = useKanbanTaskManagerContext();
@@ -13,8 +18,26 @@ export default function Sidebar() {
   const handleHideSidebarClick = () => {
     setIsSidebarHidden((prevIsSidebarHidden) => !prevIsSidebarHidden);
   };
-
+  const router = useRouter();
   const { resolvedTheme } = useTheme();
+  const [user] = useAuthState(auth);
+
+  const handleSignOut = () => {
+    console.log(`${user?.email} has been logged out`);
+    if (user) {
+      signOut(auth);
+      router.push('/');
+    }
+  };
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  console.log(user?.email);
 
   return isSidebarHidden ? (
     <div className="w-full justify-self-start self-end mb-4 z-10 absolute">
@@ -50,9 +73,12 @@ export default function Sidebar() {
       <div className="flex flex-col">
         <ThemeSwitcher />
 
-        {/* <Button className="hover:bg-violet2 hover:text-white w-2/3 rounded-r-full pl-8 py-3 my-2  text-gray3 text-left font-bold">
-          Login / Register
-        </Button> */}
+        <Button
+          onClick={handleSignOut}
+          className="text-sm text-gray5 px-4 py-2 rounded-lg text-center"
+        >
+          Sign Out
+        </Button>
 
         <Button
           onClick={handleHideSidebarClick}

@@ -1,25 +1,26 @@
 'use client';
 import { auth } from '@/app/lib/firebase-auth/config';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import {
+  useAuthState,
   useCreateUserWithEmailAndPassword,
   useSignInWithEmailAndPassword,
-  useAuthState,
 } from 'react-firebase-hooks/auth';
+import { Button } from './ui/utils/buttons/Button';
 import { SignUpForm } from './ui/utils/forms/SignUpForm';
 import { SignInForm } from './ui/utils/forms/SingInForm';
-import { Button } from './ui/utils/buttons/Button';
-import { signOut } from 'firebase/auth';
 
 export default function Home() {
   const [user] = useAuthState(auth);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [signup, setSignup] = useState(true);
-  const router = useRouter;
+  const router = useRouter();
+  const { resolvedTheme } = useTheme();
 
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
@@ -35,6 +36,7 @@ export default function Home() {
         console.log(res);
         setEmail('');
         setPassword('');
+        router.push('/demo');
       } catch (error) {
         console.error('An error has occured:', error);
       }
@@ -44,16 +46,10 @@ export default function Home() {
         console.log(res?.user.email);
         setEmail('');
         setPassword('');
+        router.push('/demo');
       } catch (error) {
         console.error('An error has occured:', error);
       }
-    }
-  };
-
-  const handleSignOut = () => {
-    console.log(`${user?.email} has been logged out`);
-    if (user) {
-      signOut(auth);
     }
   };
 
@@ -69,16 +65,28 @@ export default function Home() {
     signup ? null : setSignup(true);
   };
 
+  console.log(user);
+
   return (
     <main className="flex flex-col justify-center items-center h-screen ">
       <div className="flex flex-col w-[450px] bg-gray1 dark:bg-gray4 items-center text-center gap-4 p-8 rounded-xl shadow-lg">
-        <Image
-          width={200}
-          height={85}
-          src="/logo-dark.svg"
-          alt="kanban task manager logotype"
-          className="pb-8 pt-4"
-        />
+        {resolvedTheme === 'dark' ? (
+          <Image
+            width={200}
+            height={85}
+            src="/logo-light.svg"
+            alt="kanban task manager logotype"
+            className="p-6 border-r-[1px] border-gray2 dark:border-gray4"
+          />
+        ) : (
+          <Image
+            width={200}
+            height={85}
+            src="/logo-dark.svg"
+            alt="kanban task manager logotype"
+            className="p-6 border-r-[1px] border-gray2 dark:border-gray4"
+          />
+        )}
 
         <h2 className="text-3xl font-bold mb-6 text-center">
           <Button
@@ -116,16 +124,10 @@ export default function Home() {
 
         <Link
           href="/demo"
-          className="text-sm text-gray5 px-4 py-2 rounded-lg text-center"
+          className="text-sm text-gray5 dark:text-gray3 px-4 py-2 rounded-lg text-center"
         >
           Demo
         </Link>
-        {/* <Button
-          onClick={handleSignOut}
-          className="text-sm text-gray5 px-4 py-2 rounded-lg text-center"
-        >
-          Sign Out
-        </Button> */}
       </div>
     </main>
   );
