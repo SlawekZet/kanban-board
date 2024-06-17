@@ -26,16 +26,16 @@ export default function Sidebar() {
     console.log(`${user?.email} has been logged out`);
     if (user) {
       signOut(auth);
-      router.push('/');
     }
+    router.push('/');
   };
 
-  useEffect(() => {
-    if (!user) {
-      router.push('/');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     router.push('/');
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [user]);
 
   console.log(user?.email);
 
@@ -85,7 +85,7 @@ export default function Sidebar() {
           className="flex flex-row ml-2 pl-3 items-center font-bold text-gray3 text-sm gap-2 w-fit "
         >
           <UserIcon className="size-6" />
-          Sign Out
+          Sign Up / Sign In
         </Button>
       </div>
     </section>
