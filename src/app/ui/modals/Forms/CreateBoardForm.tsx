@@ -27,7 +27,6 @@ export const CreateBoardForm: React.FC<CreateBoardFormProps> = ({
   modalId,
 }) => {
   const { boards, setBoardToRender } = useKanbanTaskManagerContext();
-
   const [boardName, setBoardName] = useState('');
   const [columns, setColumns] = useState<Column[]>([
     { id: uuidv4(), name: '', tasks: [] },

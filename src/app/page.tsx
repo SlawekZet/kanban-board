@@ -53,10 +53,6 @@ export default function Home() {
     }
   };
 
-  if (error) {
-    console.log(error.message);
-  }
-
   const handleSignInToggle = () => {
     signup ? setSignup(false) : null;
   };
@@ -64,8 +60,6 @@ export default function Home() {
   const handleSignupToggle = () => {
     signup ? null : setSignup(true);
   };
-
-  console.log(user);
 
   return (
     <main className="flex flex-col justify-center items-center h-screen ">
@@ -121,6 +115,13 @@ export default function Home() {
             error={error?.message}
           />
         )}
+
+        {/* <Button
+          onClick={handleDemoClick}
+          className="text-sm text-gray5 dark:text-gray3 px-4 py-2 rounded-lg text-center"
+        >
+          Demo
+        </Button> */}
 
         <Link
           href="/demo"

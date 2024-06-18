@@ -45,6 +45,7 @@ export const BoardList = () => {
       modal.showModal();
     }
   };
+  console.log(boards.length);
 
   return (
     <>
@@ -52,23 +53,25 @@ export const BoardList = () => {
         <p className="text-[12px] font-bold text-gray3 tracking-[3px] pb-6 pl-8 ">
           ALL BOARDS ({boards.length})
         </p>
-        {boards.map((e, index) => (
-          <Button
-            key={index}
-            onClick={() => handleBoardClick(index, e)}
-            className={
-              isActive === index
-                ? 'flex flex-row py-3 items-center font-bold text-white bg-violet2 gap-4 w-5/6 rounded-r-full pl-8'
-                : 'flex flex-row py-3 items-center font-bold text-gray3 gap-4 pl-8'
-            }
-          >
-            <TableCellsIcon
-              fill={isActive === index ? '#FFFFFF' : '#828FA3'}
-              className="size-6"
-            />
-            <p>{e.name}</p>
-          </Button>
-        ))}
+        {!boards.length
+          ? null
+          : boards.map((e, index) => (
+              <Button
+                key={index}
+                onClick={() => handleBoardClick(index, e)}
+                className={
+                  isActive === index
+                    ? 'flex flex-row py-3 items-center font-bold text-white bg-violet2 gap-4 w-5/6 rounded-r-full pl-8'
+                    : 'flex flex-row py-3 items-center font-bold text-gray3 gap-4 pl-8'
+                }
+              >
+                <TableCellsIcon
+                  fill={isActive === index ? '#FFFFFF' : '#828FA3'}
+                  className="size-6"
+                />
+                <p>{e.name}</p>
+              </Button>
+            ))}
         <Button
           className="flex flex-row py-2 items-center text-violet2 font-bold gap-4 pl-8"
           onClick={handleCreateBoardClick}
